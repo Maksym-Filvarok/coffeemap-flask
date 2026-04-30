@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block title %}Сторінку не знайдено — CoffeeMap{% endblock %}
+
+{% block content %}
+
+<section class="error-section">
+  <div class="container">
+    <div class="error-card">
+      <span class="error-card__code">404</span>
+
+      <h1>Сторінку не знайдено</h1>
+
+      <p>
+        Такої кав’ярні або сторінки не існує. Можливо, запис було видалено
+        або посилання введено неправильно.
+      </p>
+
+      <a href="/" class="btn btn-dark">
+        Повернутися до каталогу
+      </a>
+    </div>
+  </div>
+</section>
+
+{% endblock %}

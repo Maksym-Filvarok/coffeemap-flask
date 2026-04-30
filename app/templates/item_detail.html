@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+
+{% block title %}{{ item.title }} — CoffeeMap{% endblock %}
+
+{% block content %}
+
+<section class="detail-section">
+  <div class="container">
+
+    <a href="/" class="detail-back">
+      ← Назад до каталогу
+    </a>
+
+    <article class="detail-card {% if item.is_featured %}detail-card--featured{% endif %}">
+
+      <div class="detail-card__image-wrap">
+        <img
+          src="{{ item.image_url }}"
+          alt="{{ item.title }}"
+          class="detail-card__image"
+        >
+
+        {% if item.is_featured %}
+          <span class="detail-card__badge">Featured</span>
+        {% endif %}
+      </div>
+
+      <div class="detail-card__content">
+
+        <div class="detail-card__top">
+          <div>
+            <p class="detail-card__category">{{ item.category }}</p>
+            <h1 class="detail-card__title">{{ item.title }}</h1>
+          </div>
+
+          <div class="detail-card__price">
+            {{ item.price_level }}
+          </div>
+        </div>
+
+        <p class="detail-card__description">
+          {{ item.full_description }}
+        </p>
+
+        <div class="detail-info-grid">
+
+          <div class="detail-info">
+            <span class="detail-info__label">Місто</span>
+            <strong>{{ item.city }}</strong>
+          </div>
+
+          <div class="detail-info">
+            <span class="detail-info__label">Адреса</span>
+            <strong>{{ item.address }}</strong>
+          </div>
+
+          <div class="detail-info">
+            <span class="detail-info__label">Дата додавання</span>
+            <strong>{{ item.created_at.strftime("%d.%m.%Y") }}</strong>
+          </div>
+
+          <div class="detail-info">
+            <span class="detail-info__label">Контакт</span>
+
+            {% if item.contact_url %}
+              <a href="{{ item.contact_url }}" target="_blank" rel="noopener noreferrer">
+                Відкрити сайт
+              </a>
+            {% else %}
+              <strong>Немає контакту</strong>
+            {% endif %}
+          </div>
+
+        </div>
+
+        <div class="detail-tags">
+          {% for tag in item.tag_list() %}
+            <span>{{ tag }}</span>
+          {% endfor %}
+        </div>
+
+      </div>
+    </article>
+
+  </div>
+</section>
+
+{% endblock %}
