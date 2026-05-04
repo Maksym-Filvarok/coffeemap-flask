@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block title %}Admin Login — CoffeeMap{% endblock %}
+
+{% block content %}
+
+<section class="admin-auth-section">
+  <div class="container">
+    <div class="admin-auth-card">
+
+      <span class="admin-auth-card__label">Admin area</span>
+
+      <h1>Вхід в адмінку</h1>
+
+      <p>
+        Введи пароль адміністратора, щоб керувати записами CoffeeMap.
+      </p>
+
+      {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+          <div class="flash-list">
+            {% for category, message in messages %}
+              <div class="alert alert-{{ category }} mb-2">
+                {{ message }}
+              </div>
+            {% endfor %}
+          </div>
+        {% endif %}
+      {% endwith %}
+
+      <form method="post" class="admin-form">
+        <div class="mb-3">
+          <label for="password" class="form-label">Пароль</label>
+          <input
+            type="password"
+            id="password"
+            name="password"
+            class="form-control"
+            placeholder="Введи пароль"
+            required
+          >
+        </div>
+
+        <button type="submit" class="btn btn-dark w-100">
+          Увійти
+        </button>
+      </form>
+
+    </div>
+  </div>
+</section>
+
+{% endblock %}

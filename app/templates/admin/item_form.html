@@ -1,0 +1,228 @@
+{% extends "base.html" %}
+
+{% block title %}{{ form_title }} — CoffeeMap{% endblock %}
+
+{% block content %}
+
+<section class="admin-section">
+  <div class="container">
+
+    <div class="admin-form-header">
+      <a href="{{ url_for('admin.dashboard') }}" class="detail-back">
+        ← Назад до адмінки
+      </a>
+
+      <h1>{{ form_title }}</h1>
+      <p>Заповни поля нижче. Поля з некоректними даними будуть показані з помилкою.</p>
+    </div>
+
+    <form method="post" class="admin-edit-form">
+
+      <div class="row g-4">
+
+        <div class="col-12 col-lg-8">
+
+          <div class="admin-form-card">
+
+            <div class="mb-3">
+              <label for="title" class="form-label">Назва</label>
+              <input
+                type="text"
+                id="title"
+                name="title"
+                class="form-control {% if errors.get('title') %}is-invalid{% endif %}"
+                value="{{ item.title }}"
+                required
+              >
+              {% if errors.get("title") %}
+                <div class="invalid-feedback">{{ errors["title"] }}</div>
+              {% endif %}
+            </div>
+
+            <div class="mb-3">
+              <label for="short_description" class="form-label">Короткий опис</label>
+              <textarea
+                id="short_description"
+                name="short_description"
+                class="form-control {% if errors.get('short_description') %}is-invalid{% endif %}"
+                rows="3"
+                required
+              >{{ item.short_description }}</textarea>
+              {% if errors.get("short_description") %}
+                <div class="invalid-feedback">{{ errors["short_description"] }}</div>
+              {% endif %}
+            </div>
+
+            <div class="mb-3">
+              <label for="full_description" class="form-label">Повний опис</label>
+              <textarea
+                id="full_description"
+                name="full_description"
+                class="form-control {% if errors.get('full_description') %}is-invalid{% endif %}"
+                rows="6"
+                required
+              >{{ item.full_description }}</textarea>
+              {% if errors.get("full_description") %}
+                <div class="invalid-feedback">{{ errors["full_description"] }}</div>
+              {% endif %}
+            </div>
+
+            <div class="mb-3">
+              <label for="image_url" class="form-label">URL фото</label>
+              <input
+                type="url"
+                id="image_url"
+                name="image_url"
+                class="form-control {% if errors.get('image_url') %}is-invalid{% endif %}"
+                value="{{ item.image_url }}"
+                required
+              >
+              {% if errors.get("image_url") %}
+                <div class="invalid-feedback">{{ errors["image_url"] }}</div>
+              {% endif %}
+            </div>
+
+            <div class="mb-3">
+              <label for="contact_url" class="form-label">Контактне посилання</label>
+              <input
+                type="url"
+                id="contact_url"
+                name="contact_url"
+                class="form-control {% if errors.get('contact_url') %}is-invalid{% endif %}"
+                value="{{ item.contact_url or '' }}"
+              >
+              {% if errors.get("contact_url") %}
+                <div class="invalid-feedback">{{ errors["contact_url"] }}</div>
+              {% endif %}
+            </div>
+
+          </div>
+
+        </div>
+
+        <div class="col-12 col-lg-4">
+
+          <div class="admin-form-card">
+
+            <div class="mb-3">
+              <label for="city" class="form-label">Місто</label>
+              <input
+                type="text"
+                id="city"
+                name="city"
+                class="form-control {% if errors.get('city') %}is-invalid{% endif %}"
+                value="{{ item.city }}"
+                required
+              >
+              {% if errors.get("city") %}
+                <div class="invalid-feedback">{{ errors["city"] }}</div>
+              {% endif %}
+            </div>
+
+            <div class="mb-3">
+              <label for="category" class="form-label">Категорія</label>
+              <select
+                id="category"
+                name="category"
+                class="form-select {% if errors.get('category') %}is-invalid{% endif %}"
+                required
+              >
+                <option value="">Оберіть категорію</option>
+
+                {% set categories = ["Specialty Coffee", "Breakfast", "Work Friendly", "Takeaway", "Bakery", "Vegan Friendly"] %}
+
+                {% for category in categories %}
+                  <option value="{{ category }}" {% if item.category == category %}selected{% endif %}>
+                    {{ category }}
+                  </option>
+                {% endfor %}
+              </select>
+
+              {% if errors.get("category") %}
+                <div class="invalid-feedback">{{ errors["category"] }}</div>
+              {% endif %}
+            </div>
+
+            <div class="mb-3">
+              <label for="price_level" class="form-label">Цінова категорія</label>
+              <select
+                id="price_level"
+                name="price_level"
+                class="form-select {% if errors.get('price_level') %}is-invalid{% endif %}"
+                required
+              >
+                <option value="">Оберіть ціну</option>
+
+                {% for price in ["€", "€€", "€€€"] %}
+                  <option value="{{ price }}" {% if item.price_level == price %}selected{% endif %}>
+                    {{ price }}
+                  </option>
+                {% endfor %}
+              </select>
+
+              {% if errors.get("price_level") %}
+                <div class="invalid-feedback">{{ errors["price_level"] }}</div>
+              {% endif %}
+            </div>
+
+            <div class="mb-3">
+              <label for="tags" class="form-label">Теги</label>
+              <input
+                type="text"
+                id="tags"
+                name="tags"
+                class="form-control {% if errors.get('tags') %}is-invalid{% endif %}"
+                value="{{ item.tags }}"
+                placeholder="wifi, vegan, takeaway"
+                required
+              >
+              {% if errors.get("tags") %}
+                <div class="invalid-feedback">{{ errors["tags"] }}</div>
+              {% endif %}
+            </div>
+
+            <div class="mb-3">
+              <label for="address" class="form-label">Адреса</label>
+              <input
+                type="text"
+                id="address"
+                name="address"
+                class="form-control {% if errors.get('address') %}is-invalid{% endif %}"
+                value="{{ item.address }}"
+                required
+              >
+              {% if errors.get("address") %}
+                <div class="invalid-feedback">{{ errors["address"] }}</div>
+              {% endif %}
+            </div>
+
+            <div class="form-check form-switch mb-4">
+              <input
+                class="form-check-input"
+                type="checkbox"
+                role="switch"
+                id="is_featured"
+                name="is_featured"
+                {% if item.is_featured %}checked{% endif %}
+              >
+              <label class="form-check-label" for="is_featured">
+                Featured listing
+              </label>
+            </div>
+
+            <button type="submit" class="btn btn-dark w-100">
+              {{ submit_label }}
+            </button>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </form>
+
+  </div>
+</section>
+
+{% endblock %}

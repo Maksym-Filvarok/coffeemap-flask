@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block title %}Видалити запис — CoffeeMap{% endblock %}
+
+{% block content %}
+
+<section class="admin-section">
+  <div class="container">
+
+    <div class="delete-card">
+
+      <span class="delete-card__label">Delete confirmation</span>
+
+      <h1>Видалити запис?</h1>
+
+      <p>
+        Ви точно хочете видалити кав’ярню
+        <strong>“{{ item.title }}”</strong>?
+        Цю дію не можна буде скасувати.
+      </p>
+
+      <div class="delete-card__preview">
+        <img src="{{ item.image_url }}" alt="{{ item.title }}">
+        <div>
+          <strong>{{ item.title }}</strong>
+          <span>{{ item.city }} · {{ item.category }}</span>
+        </div>
+      </div>
+
+      <div class="delete-card__actions">
+        <a href="{{ url_for('admin.dashboard') }}" class="btn btn-outline-secondary">
+          Скасувати
+        </a>
+
+        <form method="post" class="d-inline">
+          <button type="submit" class="btn btn-danger">
+            Так, видалити
+          </button>
+        </form>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+{% endblock %}
