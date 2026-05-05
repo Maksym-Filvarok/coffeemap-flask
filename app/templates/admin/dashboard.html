@@ -9,9 +9,7 @@
 
     <div class="admin-header">
       <div>
-        <span class="admin-header__label">Admin dashboard</span>
-        <h1>Керування кав’ярнями</h1>
-        <p>Тут можна створювати, редагувати, видаляти записи та змінювати Featured.</p>
+        <span class="admin-header__label">Адмін панель</span>
       </div>
 
       <div class="admin-header__actions">
@@ -26,15 +24,15 @@
     </div>
 
     {% with messages = get_flashed_messages(with_categories=true) %}
-      {% if messages %}
-        <div class="flash-list mb-4">
-          {% for category, message in messages %}
-            <div class="alert alert-{{ category }} mb-2">
-              {{ message }}
-            </div>
-          {% endfor %}
-        </div>
-      {% endif %}
+    {% if messages %}
+    <div class="flash-list mb-4">
+      {% for category, message in messages %}
+      <div class="alert alert-{{ category }} mb-2">
+        {{ message }}
+      </div>
+      {% endfor %}
+    </div>
+    {% endif %}
     {% endwith %}
 
     <div class="admin-table-card">
@@ -54,72 +52,60 @@
 
           <tbody>
             {% for item in items %}
-              <tr>
-                <td>{{ item.id }}</td>
+            <tr>
+              <td>{{ item.id }}</td>
 
-                <td>
-                  <div class="admin-item-title">
-                    <img src="{{ item.image_url }}" alt="{{ item.title }}">
-                    <div>
-                      <strong>{{ item.title }}</strong>
-                      <small>{{ item.price_level }} · {{ item.tags }}</small>
-                    </div>
+              <td>
+                <div class="admin-item-title">
+                  <img src="{{ item.image_url }}" alt="{{ item.title }}"
+                    onerror="this.src='https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=1200&q=80';">
+                  <div>
+                    <strong>{{ item.title }}</strong>
+                    <small>{{ item.price_level }} · {{ item.tags }}</small>
                   </div>
-                </td>
+                </div>
+              </td>
 
-                <td>{{ item.category }}</td>
-                <td>{{ item.city }}</td>
+              <td>{{ item.category }}</td>
+              <td>{{ item.city }}</td>
 
-                <td>
-                  {% if item.is_featured %}
-                    <span class="badge text-bg-warning">Featured</span>
-                  {% else %}
-                    <span class="badge text-bg-secondary">Regular</span>
-                  {% endif %}
-                </td>
+              <td>
+                {% if item.is_featured %}
+                <span class="badge text-bg-warning">Рекомендація</span>
+                {% else %}
+                <span class="badge text-bg-secondary">Звичайний</span>
+                {% endif %}
+              </td>
 
-                <td>{{ item.created_at.strftime("%d.%m.%Y") }}</td>
+              <td>{{ item.created_at.strftime("%d.%m.%Y") }}</td>
 
-                <td>
-                  <div class="admin-actions">
-                    <a
-                      href="{{ url_for('main.item_detail', item_id=item.id) }}"
-                      class="btn btn-sm btn-outline-secondary"
-                      target="_blank"
-                    >
-                      View
-                    </a>
+              <td>
+                <div class="admin-actions">
+                  <a href="{{ url_for('main.item_detail', item_id=item.id) }}" class="btn btn-sm btn-outline-secondary"
+                    target="_blank">
+                    Огляд
+                  </a>
 
-                    <a
-                      href="{{ url_for('admin.edit_item', item_id=item.id) }}"
-                      class="btn btn-sm btn-outline-dark"
-                    >
-                      Edit
-                    </a>
+                  <a href="{{ url_for('admin.edit_item', item_id=item.id) }}" class="btn btn-sm btn-outline-dark">
+                    Змінити
+                  </a>
 
-                    <form
-                      method="post"
-                      action="{{ url_for('admin.toggle_featured', item_id=item.id) }}"
-                      class="d-inline"
-                    >
-                      <button type="submit" class="btn btn-sm btn-outline-warning">
-                        {% if item.is_featured %}
-                          Unfeature
-                        {% else %}
-                          Feature
-                        {% endif %}
-                      </button>
-                    </form>
+                  <form method="post" action="{{ url_for('admin.toggle_featured', item_id=item.id) }}" class="d-inline">
+                    <button type="submit" class="btn btn-sm btn-outline-warning">
+                      {% if item.is_featured %}
+                      Зняти рекомендацію
+                      {% else %}
+                      Рекомендувати
+                      {% endif %}
+                    </button>
+                  </form>
 
-                    <a
-                      href="{{ url_for('admin.delete_item', item_id=item.id) }}"
-                      class="btn btn-sm btn-outline-danger"
-                    >
-                      Delete
-                    </a>
-                  </div>
-                </td>
-              </tr>
+                  <a href="{{ url_for('admin.delete_item', item_id=item.id) }}" class="btn btn-sm btn-outline-danger">
+                    Видалити
+                  </a>
+                </div>
+              </td>
+            </tr>
             {% endfor %}
           </tbody>
         </table>

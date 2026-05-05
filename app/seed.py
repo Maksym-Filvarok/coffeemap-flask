@@ -78,7 +78,7 @@ seed_items = [
         "tags": "cake, terrace, classic",
         "image_url": "https://images.unsplash.com/photo-1559925393-8be0ec4767c8?auto=format&fit=crop&w=1200&q=80",
         "address": "Lindenweg 14, 37075 Göttingen",
-        "contact_url": "https://example.com/cafe-linden",
+        "contact_url": "https://share.google/vGaf1tA7pfUijahJn",
         "is_featured": False,
     },
     {

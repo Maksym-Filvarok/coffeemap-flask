@@ -14,15 +14,12 @@
     <article class="detail-card {% if item.is_featured %}detail-card--featured{% endif %}">
 
       <div class="detail-card__image-wrap">
-        <img
-          src="{{ item.image_url }}"
-          alt="{{ item.title }}"
-          class="detail-card__image"
-        >
+        <img src="{{ item.image_url }}" alt="{{ item.title }}" class="detail-card__image"
+          onerror="this.src='https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=1200&q=80';">
 
         {% if item.is_featured %}
-          <span class="detail-card__badge">Featured</span>
-        {% endif %}
+        <span class="detail-card__badge">Featured</span>
+        {% endif %}   
       </div>
 
       <div class="detail-card__content">
@@ -63,11 +60,11 @@
             <span class="detail-info__label">Контакт</span>
 
             {% if item.contact_url %}
-              <a href="{{ item.contact_url }}" target="_blank" rel="noopener noreferrer">
-                Відкрити сайт
-              </a>
+            <a href="{{ item.contact_url }}" target="_blank" rel="noopener noreferrer">
+              Відкрити сайт
+            </a>
             {% else %}
-              <strong>Немає контакту</strong>
+            <strong>Немає контакту</strong>
             {% endif %}
           </div>
 
@@ -75,7 +72,7 @@
 
         <div class="detail-tags">
           {% for tag in item.tag_list() %}
-            <span>{{ tag }}</span>
+          <span>{{ tag }}</span>
           {% endfor %}
         </div>
 

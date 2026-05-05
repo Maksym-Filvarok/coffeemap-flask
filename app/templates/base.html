@@ -17,9 +17,11 @@
   <header class="site-header">
     <nav class="navbar navbar-expand-lg navbar-dark">
       <div class="container">
-        <a class="navbar-brand fw-bold" href="/">CoffeeMap</a>
+        <a class="navbar-brand fw-bold site-logo" href="/">
+          CoffeeMap
+        </a>
 
-        <div class="d-flex gap-2">
+        <div class="site-nav-actions">
           <a href="/" class="btn btn-outline-light btn-sm">Каталог</a>
           <a href="{{ url_for('admin.dashboard') }}" class="btn btn-outline-light btn-sm">Admin</a>
           <a href="/health" class="btn btn-outline-light btn-sm">Health</a>

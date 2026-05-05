@@ -17,6 +17,22 @@
   </div>
 </section>
 
+<section class="business-strip">
+  <div class="container">
+    <div class="business-strip__inner">
+      <div>
+        <span class="business-strip__label">Business model</span>
+        <h2>Free listings + Featured placement</h2>
+      </div>
+
+      <p>
+        Базове розміщення кав’ярні безкоштовне. Featured-записи показуються першими
+        і візуально виділяються, щоб локальний бізнес отримував більше уваги.
+      </p>
+    </div>
+  </div>
+</section>
+
 <section class="catalog-section">
   <div class="container">
 
@@ -29,9 +45,9 @@
             <option value="">Усі категорії</option>
 
             {% for category in categories %}
-              <option value="{{ category }}" {% if selected_category == category %}selected{% endif %}>
-                {{ category }}
-              </option>
+            <option value="{{ category }}" {% if selected_category==category %}selected{% endif %}>
+              {{ category }}
+            </option>
             {% endfor %}
           </select>
         </div>
@@ -42,9 +58,9 @@
             <option value="">Усі міста</option>
 
             {% for city in cities %}
-              <option value="{{ city }}" {% if selected_city == city %}selected{% endif %}>
-                {{ city }}
-              </option>
+            <option value="{{ city }}" {% if selected_city==city %}selected{% endif %}>
+              {{ city }}
+            </option>
             {% endfor %}
           </select>
         </div>
@@ -55,9 +71,9 @@
             <option value="">Усі ціни</option>
 
             {% for price_level in price_levels %}
-              <option value="{{ price_level }}" {% if selected_price_level == price_level %}selected{% endif %}>
-                {{ price_level }}
-              </option>
+            <option value="{{ price_level }}" {% if selected_price_level==price_level %}selected{% endif %}>
+              {{ price_level }}
+            </option>
             {% endfor %}
           </select>
         </div>
@@ -65,13 +81,13 @@
         <div class="col-12 col-md-3">
           <label for="sort" class="form-label">Сортування</label>
           <select class="form-select" id="sort" name="sort">
-            <option value="newest" {% if selected_sort == "newest" %}selected{% endif %}>
+            <option value="newest" {% if selected_sort=="newest" %}selected{% endif %}>
               Новіші
             </option>
-            <option value="alphabetical" {% if selected_sort == "alphabetical" %}selected{% endif %}>
+            <option value="alphabetical" {% if selected_sort=="alphabetical" %}selected{% endif %}>
               За алфавітом
             </option>
-            <option value="price_low" {% if selected_sort == "price_low" %}selected{% endif %}>
+            <option value="price_low" {% if selected_sort=="price_low" %}selected{% endif %}>
               Дешевші
             </option>
           </select>
@@ -83,9 +99,9 @@
           </button>
 
           {% if selected_category or selected_city or selected_price_level or selected_sort != "newest" %}
-            <a href="/" class="btn btn-outline-secondary">
-              Скинути фільтри
-            </a>
+          <a href="/" class="btn btn-outline-secondary">
+            Скинути фільтри
+          </a>
           {% endif %}
         </div>
 
@@ -101,60 +117,57 @@
     </div>
 
     {% if items %}
-      <div class="row g-4">
-        {% for item in items %}
-          <div class="col-12 col-md-6 col-lg-4">
-            <article class="coffee-card {% if item.is_featured %}coffee-card--featured{% endif %}">
+    <div class="row g-4">
+      {% for item in items %}
+      <div class="col-12 col-md-6 col-lg-4">
+        <article class="coffee-card {% if item.is_featured %}coffee-card--featured{% endif %}">
 
-              <div class="coffee-card__image-wrap">
-                <img
-                  src="{{ item.image_url }}"
-                  alt="{{ item.title }}"
-                  class="coffee-card__image"
-                >
+          <div class="coffee-card__image-wrap">
+            <img src="{{ item.image_url }}" alt="{{ item.title }}" class="coffee-card__image" loading="lazy"
+              onerror="this.src='https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=1200&q=80';">
 
-                {% if item.is_featured %}
-                  <span class="coffee-card__badge">Featured</span>
-                {% endif %}
-              </div>
-
-              <div class="coffee-card__body">
-                <div class="coffee-card__meta">
-                  <span>{{ item.city }}</span>
-                  <span>{{ item.price_level }}</span>
-                </div>
-
-                <h3 class="coffee-card__title">{{ item.title }}</h3>
-
-                <p class="coffee-card__description">
-                  {{ item.short_description }}
-                </p>
-
-                <div class="coffee-card__tags">
-                  {% for tag in item.tag_list() %}
-                    <span>{{ tag }}</span>
-                  {% endfor %}
-                </div>
-
-                <div class="coffee-card__footer">
-                  <span class="coffee-card__category">{{ item.category }}</span>
-
-                  <a href="{{ url_for('main.item_detail', item_id=item.id) }}" class="btn btn-sm btn-dark">
-                    Details
-                  </a>
-                </div>
-              </div>
-
-            </article>
+            {% if item.is_featured %}
+            <span class="coffee-card__badge">Featured</span>
+            {% endif %}
           </div>
-        {% endfor %}
+
+          <div class="coffee-card__body">
+            <div class="coffee-card__meta">
+              <span>{{ item.city }}</span>
+              <span>{{ item.price_level }}</span>
+            </div>
+
+            <h3 class="coffee-card__title">{{ item.title }}</h3>
+
+            <p class="coffee-card__description">
+              {{ item.short_description }}
+            </p>
+
+            <div class="coffee-card__tags">
+              {% for tag in item.tag_list() %}
+              <span>{{ tag }}</span>
+              {% endfor %}
+            </div>
+
+            <div class="coffee-card__footer">
+              <span class="coffee-card__category">{{ item.category }}</span>
+
+              <a href="{{ url_for('main.item_detail', item_id=item.id) }}" class="btn btn-sm btn-dark">
+                Детальніше
+              </a>
+            </div>
+          </div>
+
+        </article>
       </div>
+      {% endfor %}
+    </div>
     {% else %}
-      <div class="empty-state">
-        <h3>Нічого не знайдено</h3>
-        <p>Спробуй змінити фільтри або скинути їх.</p>
-        <a href="/" class="btn btn-dark">Показати всі</a>
-      </div>
+    <div class="empty-state">
+      <h3>Нічого не знайдено</h3>
+      <p>Спробуй змінити фільтри або скинути їх.</p>
+      <a href="/" class="btn btn-dark">Показати всі</a>
+    </div>
     {% endif %}
 
   </div>
